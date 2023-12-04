@@ -13,7 +13,7 @@
 
 /** \file mcp48x1.h
  * 
- * \brief Library for using an MCP48x2 digital-to-analogue converter
+ * \brief Library for using an MCP48x1 digital-to-analogue converter
  * with the Raspberry Pi Pico
  * 
 */
@@ -45,19 +45,51 @@ typedef struct mcp48x1_dac {
     enum mcp48x1_resolution resolution;
 } mcp48x1_dac_t;
 
+/*! \brief Initialise the MCP48x1
+ * 
+ * \param spi_port The Pico's SPI port, spi0 or spi1
+ * \param spi_pin_cs The chip select (CS) pin
+ * \param spi_pin_mosi The main out sub in (MOSI, TX on the Pico) pin
+ * \param spi_pin_sck The serial clock (SCK) pin
+ * \param resolution The resolution of the DAC device
+ * \param dac Pointer to the structure that stores the DAC information
+ */
 void mcp48x1_init(spi_inst_t *spi_port, uint8_t spi_pin_cs,
                   uint8_t spi_pin_mosi, uint8_t spi_pin_sck,
                   enum mcp48x1_resolution resolution,
                   mcp48x1_dac_t *dac);
 
+/*! \brief Select the DAC device
+ *
+ * \param dac Pointer to the structure that stores the DAC information
+ */
 void mcp48x1_cs_select(mcp48x1_dac_t *dac);
 
+/*! \brief Deselect the DAC device
+ *
+ * \param dac Pointer to the structure that stores the DAC information
+ */
 void mcp48x1_cs_deselect(mcp48x1_dac_t *dac);
 
+/*! \brief Set the gain
+ *
+ * \param gain Gain, 1x or 2x
+ * \param dac Pointer to the structure that stores the DAC information
+*/
 void mcp48x1_set_gain(enum mcp48x1_gain gain, mcp48x1_dac_t *dac);
 
+/*! \brief Put a digital input code
+ * 
+ * \param value Digital input code
+ * \param dac Pointer to the structure that stores the DAC information
+*/
 void mcp48x1_put(uint16_t value, mcp48x1_dac_t *dac);
 
+/*! \brief Put a voltage
+ * 
+ * \param voltage Voltage to output, in V
+ * \param dac Pointer to the structure that stores the DAC information
+*/
 void mcp48x1_put_voltage(float voltage,  mcp48x1_dac_t *dac);
 
 #endif
